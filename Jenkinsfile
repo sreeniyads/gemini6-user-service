@@ -28,6 +28,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
+                sh 'java -version'
                 // On Windows agents, use bat. On Linux, use sh.
                 sh 'mvn clean package -DskipTests' // Skipping tests for now to focus on the pipeline flow
             }
