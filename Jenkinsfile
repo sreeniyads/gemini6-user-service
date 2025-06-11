@@ -35,11 +35,20 @@ pipeline {
         }
 
         // Stage 3: Run SonarQube Analysis
+        //stage('SonarQube Analysis') {
+        //    steps {
+                // This 'withSonarQubeEnv' block is provided by the SonarQube Scanner plugin
+        //        withSonarQubeEnv('SonarQube') { // 'SonarQube' is the server name we configured in Jenkins System
+        //            sh 'mvn sonar:sonar'
+        //        }
+        //    }
+        //}
         stage('SonarQube Analysis') {
             steps {
-                // This 'withSonarQubeEnv' block is provided by the SonarQube Scanner plugin
-                withSonarQubeEnv('SonarQube') { // 'SonarQube' is the server name we configured in Jenkins System
-                    sh 'mvn sonar:sonar'
+                withSonarQubeEnv('SonarQube') { // 'SonarQube' must match the name configured under "Manage Jenkins → Configure System"
+                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
+                        sh "mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN"
+                    }
                 }
             }
         }
