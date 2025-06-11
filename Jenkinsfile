@@ -47,7 +47,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') { // 'SonarQube' must match the name configured under "Manage Jenkins → Configure System"
                     withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-                        sh "mvn sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=user-service"
+                        sh "mvn clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=user-service"
                     }
                 }
             }
