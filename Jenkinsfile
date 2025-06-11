@@ -7,7 +7,12 @@ pipeline {
     // Define the tools we need. Jenkins will ensure they are available.
     tools {
         maven 'M3' // Assumes you have a Maven tool named 'M3' configured in Jenkins Global Tool Configuration
+        jdk 'jdk21'
     }
+    environment {
+            JAVA_HOME = "${tool 'jdk21'}"
+            PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+        }
 
     stages {
         // Stage 1: Checkout the code from Git
